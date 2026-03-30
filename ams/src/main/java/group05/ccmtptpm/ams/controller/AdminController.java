@@ -8,7 +8,7 @@ import group05.ccmtptpm.ams.dto.AssetTypeRequest;
 import group05.ccmtptpm.ams.dto.AssetTypeResponse;
 import group05.ccmtptpm.ams.service.IAssetService;
 import group05.ccmtptpm.ams.service.IAssetTypeService;
-
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;
@@ -67,7 +67,7 @@ public class AdminController {
     
     @PostMapping("/assetType/add")
     public ApiResponse<AssetTypeResponse> addAssetType(
-            @RequestBody AssetTypeRequest request) {
+            @RequestBody @Valid AssetTypeRequest request) {
 
         AssetTypeResponse assetTypeResponse = assetTypeService.createAssetType(request.getName());
 
@@ -126,7 +126,7 @@ public class AdminController {
     
 
     @PostMapping("/asset/add")
-    public ApiResponse<AssetResponse> addAsset(@RequestBody AddAssetRequest request) {
+    public ApiResponse<AssetResponse> addAsset(@RequestBody @Valid AddAssetRequest request) {
         List<AssetResponse> assetResponses = assetService.addAsset(request);
         return ApiResponse.<AssetResponse>builder()
                 .success(true)
