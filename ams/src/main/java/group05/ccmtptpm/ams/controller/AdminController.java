@@ -1,17 +1,17 @@
 package group05.ccmtptpm.ams.controller;
 
-// import group05.ccmtptpm.ams.dto.AddAssetRequest;
+import group05.ccmtptpm.ams.dto.AddAssetRequest;
 import group05.ccmtptpm.ams.dto.ApiResponse;
-// import group05.ccmtptpm.ams.dto.AssetRequest;
-// import group05.ccmtptpm.ams.dto.AssetResponse;
+import group05.ccmtptpm.ams.dto.AssetRequest;
+import group05.ccmtptpm.ams.dto.AssetResponse;
 import group05.ccmtptpm.ams.dto.AssetTypeRequest;
 import group05.ccmtptpm.ams.dto.AssetTypeResponse;
-// import group05.ccmtptpm.ams.service.IAssetService;
+import group05.ccmtptpm.ams.service.IAssetService;
 import group05.ccmtptpm.ams.service.IAssetTypeService;
 
 import lombok.RequiredArgsConstructor;
 
-// import java.util.List;
+import java.util.List;
 
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -29,7 +29,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 public class AdminController {
 
     private final IAssetTypeService assetTypeService;
-//     private final IAssetService assetService;
+    private final IAssetService assetService;
     
 
     @GetMapping
@@ -103,59 +103,59 @@ public class AdminController {
 
 
     // asset management
-//     @GetMapping("/asset/getAll")
-//     public ApiResponse<?> getAllAssets(
-//             @RequestParam(defaultValue = "0") int page,
-//             @RequestParam(defaultValue = "10") int size) {
+    @GetMapping("/asset/getAll")
+    public ApiResponse<?> getAllAssets(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size) {
 
-//         return ApiResponse.builder()
-//                 .success(true)
-//                 .message("Get all assets success")
-//                 .data(assetService.getAllAssets(page, size))
-//                 .build();
-//     }
+        return ApiResponse.builder()
+                .success(true)
+                .message("Get all assets success")
+                .data(assetService.getAllAssets(page, size))
+                .build();
+    }
 
-//     @GetMapping("/asset/get/{id}")
-//     public ApiResponse<AssetResponse> getAssetById(@PathVariable Long id) {
-//         return ApiResponse.<AssetResponse>builder()
-//                 .success(true)
-//                 .message("Get asset by id success")
-//                 .data(assetService.getAssetById(id))
-//                 .build();
-//     }
+    @GetMapping("/asset/get/{id}")
+    public ApiResponse<AssetResponse> getAssetById(@PathVariable Long id) {
+        return ApiResponse.<AssetResponse>builder()
+                .success(true)
+                .message("Get asset by id success")
+                .data(assetService.getAssetById(id))
+                .build();
+    }
     
 
-//     @PostMapping("/asset/add")
-//     public ApiResponse<AssetResponse> addAsset(@RequestBody AddAssetRequest request) {
-//         List<AssetResponse> assetResponses = assetService.addAsset(request);
-//         return ApiResponse.<AssetResponse>builder()
-//                 .success(true)
-//                 .message(assetResponses.size() + " assets added successfully")
-//                 .data(assetResponses.get(0)) // Return the first added asset response
-//                 .build();
-//     }
+    @PostMapping("/asset/add")
+    public ApiResponse<AssetResponse> addAsset(@RequestBody AddAssetRequest request) {
+        List<AssetResponse> assetResponses = assetService.addAsset(request);
+        return ApiResponse.<AssetResponse>builder()
+                .success(true)
+                .message(assetResponses.size() + " assets added successfully")
+                .data(assetResponses.get(0)) // Return the first added asset response
+                .build();
+    }
 
-//     @PutMapping("/asset/update/{id}")
-//     public ApiResponse<AssetResponse> updateAsset(
-//             @PathVariable Long id,
-//             @RequestBody AssetRequest request) {
+    @PutMapping("/asset/update/{id}")
+    public ApiResponse<AssetResponse> updateAsset(
+            @PathVariable Long id,
+            @RequestBody AssetRequest request) {
 
-//         return ApiResponse.<AssetResponse>builder()
-//                 .success(true)
-//                 .message("Update asset success")
-//                 .data(assetService.updateAsset(id, request))
-//                 .build();
-//     }
+        return ApiResponse.<AssetResponse>builder()
+                .success(true)
+                .message("Update asset success")
+                .data(assetService.updateAsset(id, request))
+                .build();
+    }
 
-//     @DeleteMapping("/asset/delete/{id}")
-//     public ApiResponse<?> deleteAsset(
-//             @PathVariable Long id) {
+    @DeleteMapping("/asset/delete/{id}")
+    public ApiResponse<?> deleteAsset(
+            @PathVariable Long id) {
 
-//         return ApiResponse.builder()
-//                 .success(true)
-//                 .message("Delete asset success")
-//                 .data(assetService.deleteAsset(id))
-//                 .build();
-//     }
+        return ApiResponse.builder()
+                .success(true)
+                .message("Delete asset success")
+                .data(assetService.deleteAsset(id))
+                .build();
+    }
 
 }

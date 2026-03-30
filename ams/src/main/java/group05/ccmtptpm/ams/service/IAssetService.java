@@ -1,22 +1,22 @@
-// package group05.ccmtptpm.ams.service;
+package group05.ccmtptpm.ams.service;
 
-// import java.util.List;
+import java.util.List;
 
-// import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Page;
 
-// import group05.ccmtptpm.ams.dto.AddAssetRequest;
-// import group05.ccmtptpm.ams.dto.AssetRequest;
-// import group05.ccmtptpm.ams.dto.AssetResponse;
+import group05.ccmtptpm.ams.dto.AddAssetRequest;
+import group05.ccmtptpm.ams.dto.AssetRequest;
+import group05.ccmtptpm.ams.dto.AssetResponse;
 
-// public interface IAssetService {
+public interface IAssetService {
 
-//     Page<AssetResponse> getAllAssets(int page, int size);
+    Page<AssetResponse> getAllAssets(int page, int size);
 
-//     AssetResponse getAssetById(Long id);
+    AssetResponse getAssetById(Long id);
     
-//     List<AssetResponse> addAsset(AddAssetRequest request);
+    List<AssetResponse> addAsset(AddAssetRequest request);
 
-//     AssetResponse updateAsset(Long id, AssetRequest request);
+    AssetResponse updateAsset(Long id, AssetRequest request);
 
-//     boolean deleteAsset(Long id);
-// }
+    boolean deleteAsset(Long id);
+}
