@@ -13,4 +13,6 @@ public interface IUserService {
     UserResponse register(RegisterRequest request);
 
     LoginResponse login(LoginRequest request);
+
+    
 }
