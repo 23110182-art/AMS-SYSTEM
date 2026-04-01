@@ -6,15 +6,20 @@ import group05.ccmtptpm.ams.dto.AssetRequest;
 import group05.ccmtptpm.ams.dto.AssetResponse;
 import group05.ccmtptpm.ams.dto.AssetTypeRequest;
 import group05.ccmtptpm.ams.dto.AssetTypeResponse;
+import group05.ccmtptpm.ams.enums.EnumAssetStatus;
 import group05.ccmtptpm.ams.service.IAssetService;
 import group05.ccmtptpm.ams.service.IAssetTypeService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
 
 
 @RestController
@@ -118,5 +123,35 @@ public class AdminController {
                 .data(assetService.deleteAsset(id))
                 .build();
     }
+
+    // TODO: count assets by status or not
+    @GetMapping("/asset/count")
+    public ApiResponse<Long> countAssetsByStatusOrAll(@RequestParam(required = false) EnumAssetStatus status) {
+        return ApiResponse.<Long>builder()
+                .success(true)
+                .message("Count assets by status " + status + " success")
+                .data(assetService.countAssetsByStatusOrAll(status))
+                .build();
+    }
+
+    //TODO: count assets by type
+    @GetMapping("/asset/countByType")
+    public ApiResponse<Long> countAssetsByType(@RequestParam String assetTypeName) {
+        return ApiResponse.<Long>builder()
+                .success(true)
+                .message("Count assets by type " + assetTypeName + " success")
+                .data(assetService.countAssetByType(assetTypeName))
+                .build();
+    }
+
+    //TODO: asset statistic by asset type
+    @GetMapping("/asset/statisticByType")
+        public ApiResponse<Map<String, Long>> assetStatisticByAssetType() {
+                return ApiResponse.<Map<String, Long>>builder()
+                        .success(true)
+                        .message("Asset statistic by asset type success")
+                        .data(assetService.assetStatisticByAssetType())
+                        .build();
+        }
 
 }

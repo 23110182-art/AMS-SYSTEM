@@ -2,6 +2,7 @@ package group05.ccmtptpm.ams.service.impl;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -12,6 +13,7 @@ import group05.ccmtptpm.ams.dto.AssetRequest;
 import group05.ccmtptpm.ams.dto.AssetResponse;
 import group05.ccmtptpm.ams.entity.Asset;
 import group05.ccmtptpm.ams.entity.AssetType;
+import group05.ccmtptpm.ams.enums.EnumAssetStatus;
 import group05.ccmtptpm.ams.exception.CustomException;
 import group05.ccmtptpm.ams.repository.AssetRepository;
 import group05.ccmtptpm.ams.repository.AssetTypeRepository;
@@ -127,5 +129,27 @@ public class AssetServiceImpl implements IAssetService {
                 .status(asset.getStatus())
                 .assetTypeName(asset.getAssetType().getName())
                 .build();
+    }
+
+    @Override
+    public Long countAssetsByStatusOrAll(EnumAssetStatus status) {
+        return assetRepository.countByStatusOrAll(status);
+    }
+
+    @Override
+    public Long countAssetByType(String assetTypeName) {
+        return assetRepository.countByAssetTypeName(assetTypeName);
+    }
+
+    @Override
+    public Map<String, Long> assetStatisticByAssetType() {
+        List<Object[]> results = assetRepository.assetStatisticByAssetType();
+        Map<String, Long> statistic = new java.util.HashMap<>();
+        for (Object[] result : results) {
+            String typeName = (String) result[0];
+            Long count = (Long) result[1];
+            statistic.put(typeName, count);
+        }
+        return statistic;
     }
 }
