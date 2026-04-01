@@ -1,0 +1,14 @@
+{
+  "configurations": [
+    {
+      "type": "java",
+      "name": "Spring Boot-AmsApplication<ams>",
+      "request": "launch",
+      "cwd": "${workspaceFolder}",
+      "mainClass": "group05.ccmtptpm.ams.AmsApplication",
+      "projectName": "ams",
+      "args": "",
+      "envFile": "${workspaceFolder}/.env"
+    }
+  ]
+}
