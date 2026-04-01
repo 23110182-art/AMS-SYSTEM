@@ -6,19 +6,22 @@ import group05.ccmtptpm.ams.dto.AssetRequest;
 import group05.ccmtptpm.ams.dto.AssetResponse;
 import group05.ccmtptpm.ams.dto.AssetTypeRequest;
 import group05.ccmtptpm.ams.dto.AssetTypeResponse;
+import group05.ccmtptpm.ams.dto.AssetUsageResponse;
+import group05.ccmtptpm.ams.dto.UserResponse;
 import group05.ccmtptpm.ams.enums.EnumAssetStatus;
 import group05.ccmtptpm.ams.service.IAssetService;
 import group05.ccmtptpm.ams.service.IAssetTypeService;
+import group05.ccmtptpm.ams.service.IAssetUsageService;
+import group05.ccmtptpm.ams.service.IUserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.data.domain.Page;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 
 
@@ -29,6 +32,8 @@ public class AdminController {
 
     private final IAssetTypeService assetTypeService;
     private final IAssetService assetService;
+    private final IAssetUsageService assetUsageService;
+    private final IUserService userService;
     
 
     @GetMapping
@@ -40,6 +45,20 @@ public class AdminController {
                 .data("Hello Admin")
                 .build();
     }
+
+    // View all users
+    @GetMapping("/users")
+        public ApiResponse<Page<UserResponse>> getAllUsers(
+                @RequestParam(defaultValue = "0") int page,
+                @RequestParam(defaultValue = "10") int size) {
+        
+                Page<UserResponse> users = userService.getAllUsers(page, size);
+                return ApiResponse.<Page<UserResponse>>builder()
+                        .success(true)
+                        .message("Get all users success")
+                        .data(users)
+                        .build();
+        }
 
     @GetMapping("/assetType/get/{id}")
     public ApiResponse<AssetTypeResponse> getAssetTypeById(
@@ -153,5 +172,36 @@ public class AdminController {
                         .data(assetService.assetStatisticByAssetType())
                         .build();
         }
+
+     @PutMapping("/asset-usage/{id}/approve")
+    public ApiResponse<Void> approve(@PathVariable Long id) {
+        assetUsageService.approve(id);
+        return ApiResponse.<Void>builder()
+                .success(true)
+                .message("Asset usage approved")
+                .build();
+    }
+
+    @PutMapping("/asset-usage/{id}/reject")
+    public ApiResponse<Void> reject(@PathVariable Long id) {
+        assetUsageService.reject(id);
+        return ApiResponse.<Void>builder()
+                .success(true)
+                .message("Asset usage rejected")
+                .build();
+    }
+
+    @GetMapping("/asset-usage/getAll")
+        public ApiResponse<Page<AssetUsageResponse>> getAllAssetUsages(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size) {
+
+        Page<AssetUsageResponse> assetUsages = assetUsageService.getAllAssetUsages(page, size);
+        return ApiResponse.<Page<AssetUsageResponse>>builder()
+                .success(true)
+                .message("Get all asset usages success")
+                .data(assetUsages)
+                .build();
+    }
 
 }
