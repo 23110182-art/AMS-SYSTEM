@@ -11,6 +11,8 @@ import group05.ccmtptpm.ams.security.JwtUtil;
 import group05.ccmtptpm.ams.service.IUserService;
 import lombok.RequiredArgsConstructor;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -72,5 +74,14 @@ public class UserServiceImpl implements IUserService {
                 .build();
     }
 
+    @Override
+    public Page<UserResponse> getAllUsers(int page, int size) {
+        return userRepository.findAll(PageRequest.of(page, size))
+                .map(user -> UserResponse.builder()
+                        .id(user.getId())
+                        .username(user.getUsername())
+                        .role(user.getRole())
+                        .build());
+    }
     
 }
