@@ -15,12 +15,6 @@ import java.util.List;
 
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.PathVariable;
 
 
 @RestController
@@ -39,18 +33,6 @@ public class AdminController {
                 .success(true)
                 .message("OK")
                 .data("Hello Admin")
-                .build();
-    }
-
-    @GetMapping("/assetType/getAll")
-    public ApiResponse<?> getAllAssetTypes(
-            @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "10") int size) {
-
-        return ApiResponse.builder()
-                .success(true)
-                .message("Get all asset types success")
-                .data(assetTypeService.getAllAssetTypes(page, size))
                 .build();
     }
 
@@ -102,28 +84,7 @@ public class AdminController {
     }
 
 
-    // asset management
-    @GetMapping("/asset/getAll")
-    public ApiResponse<?> getAllAssets(
-            @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "10") int size) {
-
-        return ApiResponse.builder()
-                .success(true)
-                .message("Get all assets success")
-                .data(assetService.getAllAssets(page, size))
-                .build();
-    }
-
-    @GetMapping("/asset/get/{id}")
-    public ApiResponse<AssetResponse> getAssetById(@PathVariable Long id) {
-        return ApiResponse.<AssetResponse>builder()
-                .success(true)
-                .message("Get asset by id success")
-                .data(assetService.getAssetById(id))
-                .build();
-    }
-    
+    // asset management    
 
     @PostMapping("/asset/add")
     public ApiResponse<AssetResponse> addAsset(@RequestBody @Valid AddAssetRequest request) {
