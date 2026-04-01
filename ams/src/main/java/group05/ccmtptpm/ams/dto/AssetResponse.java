@@ -1,19 +1,19 @@
-// package group05.ccmtptpm.ams.dto;
+package group05.ccmtptpm.ams.dto;
 
-// import group05.ccmtptpm.ams.enums.EnumAssetStatus;
-// import lombok.*;
+import group05.ccmtptpm.ams.enums.EnumAssetStatus;
+import lombok.*;
 
-// @Getter
-// @Setter
-// @NoArgsConstructor
-// @AllArgsConstructor
-// @Builder
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 
-// public class AssetResponse {
+public class AssetResponse {
     
-//     private Long id;
-//     private String name;
-//     private EnumAssetStatus status;
-//     private String assetTypeName;
+    private Long id;
+    private String name;
+    private EnumAssetStatus status;
+    private String assetTypeName;
 
-// }
+}
