@@ -1,0 +1,12 @@
+{"properties": [
+  {
+    "name": "mvc.view.prefix",
+    "type": "java.lang.String",
+    "description": "A description for 'mvc.view.prefix'"
+  },
+  {
+    "name": "mvc.view.suffix",
+    "type": "java.lang.String",
+    "description": "A description for 'mvc.view.suffix'"
+  }
+]}
