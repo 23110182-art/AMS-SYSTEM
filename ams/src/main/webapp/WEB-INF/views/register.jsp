@@ -5,7 +5,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Asset Management System - Login</title>
+        <title>Asset Management System - Register</title>
         <link rel="stylesheet" href="/css/login.css">
     </head>
 
@@ -14,7 +14,7 @@
         <div class="login-card">
             <div class="logo-icon">📦</div>
             <h2>Asset Management System</h2>
-            <p class="subtitle">Sign in to your account</p>
+            <p class="subtitle">Create a new account</p>
 
             <div id="errorMessage"></div>
 
@@ -28,23 +28,26 @@
                 <input type="password" id="password" placeholder="Enter your password">
             </div>
 
-            <div class="demo-box">
-                <strong>Demo accounts:</strong>
-                Admin: username "admin", password "admin123"<br>
-                User: username "user", password "user123"
+            <div class="form-group">
+                <label>Role</label>
+                <select id="role">
+                    <option value="USER">User</option>
+                    <option value="ADMIN">Admin</option>
+                </select>
             </div>
 
-            <button class="btn-submit" id="loginBtn">Sign In</button>
+            <button class="btn-submit" id="registerBtn">Register</button>
 
             <div class="register-link">
-                Don't have an account? <a href="/register">Register</a>
+                Already have an account? <a href="/login">Sign in</a>
             </div>
         </div>
 
         <script>
-            document.getElementById("loginBtn").addEventListener("click", function () {
+            document.getElementById("registerBtn").addEventListener("click", function () {
                 const userVal = document.getElementById("username").value;
                 const passVal = document.getElementById("password").value;
+                const roleVal = document.getElementById("role").value;
                 const errorDiv = document.getElementById("errorMessage");
 
                 if (!userVal || !passVal) {
@@ -53,24 +56,17 @@
                     return;
                 }
 
-                fetch('/api/auth/login', {
+                fetch('/api/auth/register', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ username: userVal, password: passVal })
+                    body: JSON.stringify({ username: userVal, password: passVal, role: roleVal })
                 })
                     .then(response => response.json())
                     .then(data => {
                         if (data.success) {
-                            localStorage.setItem('jwt_token', data.data.token);
-                            document.cookie = 'jwt_token=' + encodeURIComponent(data.data.token) + '; path=/; SameSite=Lax';
-                            const role = data.data.user.role.toUpperCase();
-                            if (role === 'ADMIN') {
-                                window.location.href = '/admin/dashboard';
-                            } else {
-                                window.location.href = '/user/dashboard';
-                            }
+                            window.location.href = '/login';
                         } else {
-                            errorDiv.innerText = data.message || "Invalid username or password";
+                            errorDiv.innerText = data.message || "Registration failed.";
                             errorDiv.style.display = "block";
                         }
                     })

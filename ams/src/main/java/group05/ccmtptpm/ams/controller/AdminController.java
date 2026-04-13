@@ -28,6 +28,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api/admin")
 @RequiredArgsConstructor
+@PreAuthorize("hasRole('ADMIN')")
 public class AdminController {
 
     private final IAssetTypeService assetTypeService;
@@ -37,7 +38,6 @@ public class AdminController {
     
 
     @GetMapping
-    @PreAuthorize("hasRole('ADMIN')")
     public ApiResponse<String> adminOnly() {
         return ApiResponse.<String>builder()
                 .success(true)
@@ -68,6 +68,33 @@ public class AdminController {
                 .success(true)
                 .message("Get asset type by id success")
                 .data(assetTypeService.getAssetTypeById(id))
+                .build();
+    }
+
+    @GetMapping("/assetType/getAll")
+    public ApiResponse<Page<AssetTypeResponse>> getAllAssetTypes(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size) {
+
+        return ApiResponse.<Page<AssetTypeResponse>>builder()
+                .success(true)
+                .message("Get all asset types success")
+                .data(assetTypeService.getAllAssetTypes(page, size))
+                .build();
+    }
+
+    @GetMapping("/asset/getAll")
+    public ApiResponse<Page<AssetResponse>> getAllAssets(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size,
+            @RequestParam(required = false) String keyword,
+            @RequestParam(required = false) String assetTypeName,
+            @RequestParam(required = false) EnumAssetStatus status) {
+
+        return ApiResponse.<Page<AssetResponse>>builder()
+                .success(true)
+                .message("Get all assets success")
+                .data(assetService.getAllAssets(page, size, keyword, assetTypeName, status))
                 .build();
     }
     
@@ -172,7 +199,7 @@ public class AdminController {
                         .build();
         }
 
-     @PutMapping("/asset-usage/{id}/approve")
+    @PutMapping("/asset-usage/{id}/approve")
     public ApiResponse<Void> approve(@PathVariable Long id) {
         assetUsageService.approve(id);
         return ApiResponse.<Void>builder()

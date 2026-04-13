@@ -1,11 +1,12 @@
 -- ======================
 -- ASSET TYPES
 -- ======================
-INSERT INTO asset_types (id, name) VALUES (1, 'Laptop');
-INSERT INTO asset_types (id, name) VALUES (2, 'Monitor');
-INSERT INTO asset_types (id, name) VALUES (3, 'Keyboard');
-INSERT INTO asset_types (id, name) VALUES (4, 'Mouse');
-INSERT INTO asset_types (id, name) VALUES (5, 'Printer');
+INSERT INTO asset_types (name) VALUES
+('Laptop'),
+('Monitor'),
+('Keyboard'),
+('Mouse'),
+('Printer');
 
 -- ======================
 -- ASSETS

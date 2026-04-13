@@ -110,8 +110,17 @@ public class AssetUsageServiceImpl implements IAssetUsageService {
 
     @Override
     public void returnAsset(Long id) {
+        User currentUser = getCurrentUser();
         AssetUsage usage = assetUsageRepository.findById(id)
                 .orElseThrow(() -> new CustomException("Asset usage request not found"));
+
+        if (!usage.getUser().getId().equals(currentUser.getId())) {
+            throw new CustomException("You can only return your own asset request");
+        }
+
+        if (usage.getStatus() != EnumAssetUsageType.APPROVED) {
+            throw new CustomException("Only approved asset requests can be returned");
+        }
 
         usage.setStatus(EnumAssetUsageType.RETURNED);
 
@@ -125,6 +134,23 @@ public class AssetUsageServiceImpl implements IAssetUsageService {
     @Override
     public Page<AssetUsageResponse> getAllAssetUsages(int page, int size) {
         return assetUsageRepository.findAll(PageRequest.of(page, size))
+                .map(usage -> AssetUsageResponse.builder()
+                        .id(usage.getId())
+                        .userId(usage.getUser().getId())
+                        .userName(usage.getUser().getUsername())
+                        .assetId(usage.getAsset().getId())
+                        .assetName(usage.getAsset().getName())
+                        .startDate(usage.getStartDate())
+                        .endDate(usage.getEndDate())
+                        .status(usage.getStatus())
+                        .build());
+    }
+
+    @Override
+    public Page<AssetUsageResponse> getCurrentUserAssetUsages(int page, int size) {
+        User currentUser = getCurrentUser();
+
+        return assetUsageRepository.findByUserUsernameOrderByIdDesc(currentUser.getUsername(), PageRequest.of(page, size))
                 .map(usage -> AssetUsageResponse.builder()
                         .id(usage.getId())
                         .userId(usage.getUser().getId())
