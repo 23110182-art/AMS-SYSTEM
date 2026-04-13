@@ -143,7 +143,6 @@ public class AdminController {
                 .build();
     }
 
-    // TODO: count assets by status or not
     @GetMapping("/asset/count")
     public ApiResponse<Long> countAssetsByStatusOrAll(@RequestParam(required = false) EnumAssetStatus status) {
         return ApiResponse.<Long>builder()
@@ -153,7 +152,7 @@ public class AdminController {
                 .build();
     }
 
-    //TODO: count assets by type
+  
     @GetMapping("/asset/countByType")
     public ApiResponse<Long> countAssetsByType(@RequestParam String assetTypeName) {
         return ApiResponse.<Long>builder()
@@ -163,7 +162,7 @@ public class AdminController {
                 .build();
     }
 
-    //TODO: asset statistic by asset type
+
     @GetMapping("/asset/statisticByType")
         public ApiResponse<Map<String, Long>> assetStatisticByAssetType() {
                 return ApiResponse.<Map<String, Long>>builder()
