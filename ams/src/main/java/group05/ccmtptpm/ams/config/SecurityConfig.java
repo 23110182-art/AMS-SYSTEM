@@ -1,10 +1,12 @@
 package group05.ccmtptpm.ams.config;
 
 import group05.ccmtptpm.ams.security.JwtFilter;
+import jakarta.servlet.DispatcherType;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.*;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -25,28 +27,27 @@ public class SecurityConfig {
     }
 
     @Bean
-public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-    http
-            .csrf(csrf -> csrf.disable())
-            .authorizeHttpRequests(auth -> auth
-                    // Cho phép truy cập API auth và các trang giao diện mà không cần Token
-                    .requestMatchers("/",  "/error", "/api/auth/**", "/login", 
-                 "/admin/dashboard", "/user/dashboard","/admin/types","/admin/requests","/admin/assets",
-                 "/user/assets","/user/request",
-                 "/css/**", "/WEB-INF/views/**").permitAll()
-                    // Các API admin yêu cầu role ADMIN
-                    .requestMatchers("/api/admin/**").hasRole("ADMIN")
-                    .anyRequest().authenticated()
-            )
-            .exceptionHandling(ex -> ex
-                .authenticationEntryPoint((request, response, authException) -> {
-                    response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Unauthorized");
-                })
-                .accessDeniedHandler((request, response, accessDeniedException) -> {
-                    response.sendError(HttpServletResponse.SC_FORBIDDEN, "Forbidden");
-                })
-            )
-            .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
-    return http.build();
-}
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+        http
+                .csrf(csrf -> csrf.disable())
+                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .authorizeHttpRequests(auth -> auth
+                        .dispatcherTypeMatchers(DispatcherType.FORWARD, DispatcherType.ERROR).permitAll()
+                        .requestMatchers("/", "/error", "/login", "/register", "/api/auth/**", "/api/hello",
+                                "/css/**", "/js/**", "/images/**", "/webjars/**").permitAll()
+                        .requestMatchers("/admin/**", "/api/admin/**").hasRole("ADMIN")
+                        .requestMatchers("/user/**", "/api/users/**", "/api/asset/**").hasAnyRole("USER", "ADMIN")
+                        .anyRequest().authenticated()
+                )
+                .exceptionHandling(ex -> ex
+                        .authenticationEntryPoint((request, response, authException) -> {
+                            response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Unauthorized");
+                        })
+                        .accessDeniedHandler((request, response, accessDeniedException) -> {
+                            response.sendError(HttpServletResponse.SC_FORBIDDEN, "Forbidden");
+                        })
+                )
+                .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
+        return http.build();
+    }
 }

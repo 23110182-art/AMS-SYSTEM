@@ -15,4 +15,5 @@ public interface IAssetUsageService {
     void returnAsset(Long id);
 
     Page<AssetUsageResponse> getAllAssetUsages(int page, int size);
+    Page<AssetUsageResponse> getCurrentUserAssetUsages(int page, int size);
 }

@@ -12,7 +12,7 @@ import group05.ccmtptpm.ams.enums.EnumAssetStatus;
 
 public interface IAssetService {
 
-    Page<AssetResponse> getAllAssets(int page, int size);
+    Page<AssetResponse> getAllAssets(int page, int size, String keyword, String assetTypeName, EnumAssetStatus status);
 
     AssetResponse getAssetById(Long id);
     

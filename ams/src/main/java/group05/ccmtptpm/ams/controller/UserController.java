@@ -7,6 +7,8 @@ import group05.ccmtptpm.ams.entity.User;
 import group05.ccmtptpm.ams.service.IAssetUsageService;
 import group05.ccmtptpm.ams.service.IUserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -15,12 +17,14 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api/users")
 @RequiredArgsConstructor
+@PreAuthorize("hasAnyRole('USER', 'ADMIN')")
 public class UserController {
 
     private final IUserService userService;
     private final IAssetUsageService assetUsageService;
 
     @PostMapping
+    @PreAuthorize("hasRole('ADMIN')")
     public ApiResponse<User> createUser(@RequestBody User user) {
         User savedUser = userService.createUser(user);
 
@@ -49,6 +53,17 @@ public class UserController {
         return ApiResponse.<AssetUsageResponse>builder()
                 .success(true)
                 .message("Asset returned")
+                .build();
+    }
+
+    @GetMapping("/asset-usage/my")
+    public ApiResponse<Page<AssetUsageResponse>> getMyAssetUsages(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size) {
+        return ApiResponse.<Page<AssetUsageResponse>>builder()
+                .success(true)
+                .message("Get current user asset usages success")
+                .data(assetUsageService.getCurrentUserAssetUsages(page, size))
                 .build();
     }
 }

@@ -29,9 +29,16 @@ public class AssetServiceImpl implements IAssetService {
     private final AssetTypeRepository assetTypeRepository;
 
     @Override
-    public Page<AssetResponse> getAllAssets(int page, int size) {
-    
-        Page<Asset> assets = assetRepository.findAll(PageRequest.of(page, size));
+    public Page<AssetResponse> getAllAssets(int page, int size, String keyword, String assetTypeName, EnumAssetStatus status) {
+
+        String normalizedKeyword = (keyword == null || keyword.trim().isEmpty()) ? null : keyword.trim();
+        String normalizedType = (assetTypeName == null || assetTypeName.trim().isEmpty()) ? null : assetTypeName.trim();
+
+        Page<Asset> assets = assetRepository.findAssetsWithFilters(
+                normalizedKeyword,
+                normalizedType,
+                status,
+                PageRequest.of(page, size));
         return assets.map(asset -> AssetResponse.builder()
                 .id(asset.getId())
                 .name(asset.getName())
