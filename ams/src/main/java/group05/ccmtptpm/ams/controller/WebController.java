@@ -9,6 +9,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class WebController {
+
+    @GetMapping("")
+    public String defaultLogin() {
+        System.out.println("Accessing login page");
+        return "login";
+    }
+
     @GetMapping("/login")
     public String loginPage() {
         System.out.println("Accessing login page");
