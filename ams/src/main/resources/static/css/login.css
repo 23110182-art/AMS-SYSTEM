@@ -1,0 +1,63 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #3b82f6; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+.login-card {
+    background: white;
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+    box-sizing: border-box;
+}
+.logo-icon {
+    background-color: #3b82f6;
+    color: white;
+    width: 48px;
+    height: 48px;
+    border-radius: 8px;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 24px;
+    margin-bottom: 16px;
+}
+h2 { margin: 0 0 5px 0; color: #111827; font-size: 24px;}
+p.subtitle { margin: 0 0 24px 0; color: #6b7280; font-size: 15px;}
+
+.form-group { text-align: left; margin-bottom: 16px; }
+.form-group label { display: block; margin-bottom: 6px; font-weight: 600; font-size: 14px; color: #111827;}
+.form-group input {
+    width: 100%; padding: 10px 12px; border: 1px solid #f3f4f6; 
+    background-color: #f9fafb; border-radius: 6px; box-sizing: border-box;
+    font-size: 14px;
+}
+.form-group input:focus { outline: none; border-color: #3b82f6; }
+
+.demo-box {
+    background-color: #eff6ff; border: 1px solid #bfdbfe;
+    border-radius: 6px; padding: 12px; text-align: left;
+    font-size: 13px; color: #1e40af; margin-bottom: 20px;
+}
+.demo-box strong { display: block; margin-bottom: 4px;}
+
+.btn-submit {
+    width: 100%; padding: 12px; background-color: #3b82f6;
+    color: white; border: none; border-radius: 6px;
+    font-size: 16px; font-weight: 600; cursor: pointer;
+    transition: background-color 0.2s;
+}
+.btn-submit:hover { background-color: #2563eb; }
+
+.register-link { margin-top: 20px; font-size: 14px; color: #6b7280; }
+.register-link a { color: #3b82f6; text-decoration: none; }
+
+#errorMessage { color: red; font-size: 13px; margin-bottom: 10px; display: none; }

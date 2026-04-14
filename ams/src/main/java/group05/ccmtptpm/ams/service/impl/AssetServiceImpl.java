@@ -29,9 +29,16 @@ public class AssetServiceImpl implements IAssetService {
     private final AssetTypeRepository assetTypeRepository;
 
     @Override
-    public Page<AssetResponse> getAllAssets(int page, int size) {
-        // TODO Auto-generated method stub
-        Page<Asset> assets = assetRepository.findAll(PageRequest.of(page, size));
+    public Page<AssetResponse> getAllAssets(int page, int size, String keyword, String assetTypeName, EnumAssetStatus status) {
+
+        String normalizedKeyword = (keyword == null || keyword.trim().isEmpty()) ? null : keyword.trim();
+        String normalizedType = (assetTypeName == null || assetTypeName.trim().isEmpty()) ? null : assetTypeName.trim();
+
+        Page<Asset> assets = assetRepository.findAssetsWithFilters(
+                normalizedKeyword,
+                normalizedType,
+                status,
+                PageRequest.of(page, size));
         return assets.map(asset -> AssetResponse.builder()
                 .id(asset.getId())
                 .name(asset.getName())
@@ -88,7 +95,7 @@ public class AssetServiceImpl implements IAssetService {
 
     @Override
     public AssetResponse updateAsset(Long id, AssetRequest request) {
-        // TODO Auto-generated method stub
+        
         // check if asset exists
         Asset asset = assetRepository.findById(id)
                 .orElseThrow(() -> new CustomException("Asset not found with id: " + id));
@@ -111,7 +118,7 @@ public class AssetServiceImpl implements IAssetService {
 
     @Override
     public boolean deleteAsset(Long id) {
-        // TODO Auto-generated method stub
+       
         if (!assetRepository.existsById(id)) {
             throw new CustomException("Asset not found with id: " + id);
         }
