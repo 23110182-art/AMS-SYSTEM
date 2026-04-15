@@ -1,17 +1,36 @@
 version: "3.8"
 
 services:
-  mysql:
-    image: mysql:8.0
-    container_name: ams-mysql
-    restart: always
-    environment:
-      MYSQL_ROOT_PASSWORD: 123456
-      MYSQL_DATABASE: ams_db
+  # mysql:
+  #   image: mysql:8.0
+  #   container_name: ams-mysql
+  #   restart: always
+  #   environment:
+  #     MYSQL_ROOT_PASSWORD: 123456
+  #     MYSQL_DATABASE: ams_db
+  #   ports:
+  #     - "3307:3306"
+  #   volumes:
+  #     - mysql_data:/var/lib/mysql
+  
+  app:
+    build: ./ams   
+    container_name: ams-app
+    # depends_on:
+    #   - mysql
     ports:
-      - "3307:3306"
-    volumes:
-      - mysql_data:/var/lib/mysql
+      - "8080:8080"
+    # môi trường local docker
+    # environment:
+    #   SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/ams_db
+    #   SPRING_DATASOURCE_USERNAME: root
+    #   SPRING_DATASOURCE_PASSWORD: 123456
+    # môi trường deploy
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://dpg-d7fh7ql8nd3s73dt5mbg-a:5432/ams_db_7v7y
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: YbVWH1iO4qCuQwNdgQMSMxmtyKwhgouUX
+      SPRING_DATASOURCE_DRIVER: org.postgresql.Driver
 
-volumes:
-  mysql_data:
+# volumes:
+#   mysql_data:
