@@ -73,6 +73,8 @@ describe('Admin Asset List', () => {
     openAssetListPage();
   });
 
+
+  //tim tai san theo tu khoa
   it('searches assets by keyword', () => {
     cy.intercept({
       method: 'GET',
@@ -92,6 +94,7 @@ describe('Admin Asset List', () => {
     cy.get('#assetTableBody tr').should('have.length', 1);
   });
 
+  //loc theo loai tai san
   it('filters assets by category', () => {
     cy.get('#typeFilter').select('Printer');
     cy.wait('@getAssets').then(({ request, response }) => {
@@ -104,6 +107,7 @@ describe('Admin Asset List', () => {
     cy.contains('#assetTableBody tr', 'Dell Inspiron 15').should('not.exist');
   });
 
+  // loc theo tinh trang tai san
   it('filters assets by status', () => {
     cy.get('#statusFilter').select('BROKEN');
     cy.wait('@getAssets').then(({ request, response }) => {
@@ -118,6 +122,9 @@ describe('Admin Asset List', () => {
     cy.contains('#assetTableBody tr', 'Dell Inspiron 15').should('not.exist');
   });
 
+
+  // ktra phan trang tren danh sach tai san, xem co hien thi dung so trang va so luong tai san tren moi trang khong
+  // va khi click vao nut next page thi co goi api de lay trang tiep theo khong, va du lieu tra ve co chinh xac khong
   it('navigates between asset list pages', () => {
     cy.get('#paginationInfo').should('contain', 'Showing 1 to 10');
     cy.get('#pageIndicator').should('contain', '1 /');

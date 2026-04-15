@@ -58,21 +58,23 @@ describe('Admin Asset Management Validation', () => {
     cy.wait('@getAssetTypes').its('response.statusCode').should('eq', 200);
     cy.wait('@getAssets').its('response.statusCode').should('eq', 200);
 
+    // khong nhap ten tai san
     openCreateModal();
     cy.get('#assetName').clear();
     cy.get('#assetCategory').select(assetData.type);
     cy.get('#assetStatus').select(assetData.status);
     cy.get('#assetQuantity').clear().type(assetData.quantity);
-
+     //ktra xem co hien thong bao loi khi ten tai san de trong khong
     cy.on('window:alert', (message) => {
       expect(message).to.eq('Please enter Asset Name!');
     });
-
+    
+    // bam save
     cy.contains('#assetModal .btn-primary', 'Save Asset').click();
-
-    cy.get('#assetModal').should('have.css', 'display', 'flex');
-    cy.get('#assetId').should('have.value', '');
-    cy.get('@addAsset.all').should('have.length', 0);
+    
+    cy.get('#assetModal').should('have.css', 'display', 'flex'); // modal van con hien, chua bi dong
+    cy.get('#assetId').should('have.value', ''); // id khong duoc gui len, truong id phai de trong khi tao moi
+    cy.get('@addAsset.all').should('have.length', 0);  // ktra xem api tao moi asset co duoc goi khong, neu form bi loi thi se khong goi api, va du lieu se khong duoc gui len server
   });
 
   it('shows validation when quantity is less than 1 and does not submit the form', () => {
@@ -96,6 +98,7 @@ describe('Admin Asset Management Validation', () => {
 
     cy.contains('#assetModal .btn-primary', 'Save Asset').click();
 
+    //loi hien thi, form van con o trang thai tao moi, va api tao moi khong duoc goi, du lieu khong duoc gui len server
     cy.get('#assetModal').should('have.css', 'display', 'flex');
     cy.get('#assetName').should('have.value', `Invalid Quantity Asset ${runId}`);
     cy.get('#assetQuantity').should('have.value', '0');
