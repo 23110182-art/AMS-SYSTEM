@@ -126,7 +126,7 @@
                 <div class="page-container">
 
                     <div class="content-header">
-                        <h2 class="page-title">Danh sách Yêu cầu mượn tài sản</h2>
+                        <h2 class="page-title">Asset Borrowing Request List</h2>
                     </div>
 
                     <div class="card">
@@ -134,13 +134,13 @@
                             <table class="table">
                                 <thead>
                                     <tr>
-                                        <th>Mã YC</th>
-                                        <th>Người yêu cầu</th>
-                                        <th>Tên tài sản</th>
-                                        <th>Ngày bắt đầu</th>
-                                        <th>Ngày kết thúc</th>
-                                        <th>Trạng thái</th>
-                                        <th>Thao tác</th>
+                                        <th>Request ID</th>
+                                        <th>Requested By</th>
+                                        <th>Asset Name</th>
+                                        <th>Start Date</th>
+                                        <th>End Date</th>
+                                        <th>Status</th>
+                                        <th>Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody id="requestTableBody">

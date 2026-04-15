@@ -6,10 +6,10 @@
     </div>
     
     <div class="topbar-right">
-        <div class="search-container">
+        <!-- <div class="search-container">
             <i class="fas fa-search"></i>
             <input type="text" placeholder="Search...">
-        </div>
+        </div> -->
         
         <button onclick="logout()" class="btn-logout">
             <i class="fas fa-sign-out-alt"></i> Logout
