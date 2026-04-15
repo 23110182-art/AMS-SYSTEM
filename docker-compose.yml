@@ -29,7 +29,7 @@ services:
     environment:
       SPRING_DATASOURCE_URL: jdbc:postgresql://dpg-d7fh7ql8nd3s73dt5mbg-a:5432/ams_db_7v7y
       SPRING_DATASOURCE_USERNAME: root
-      SPRING_DATASOURCE_PASSWORD: YbVWH1iO4qCuQwNdgQMSMxmtyKwhgouUX
+      SPRING_DATASOURCE_PASSWORD: bVWH1iO4qCuQwNdgQMSMxmtyKwhgouUX
       SPRING_DATASOURCE_DRIVER: org.postgresql.Driver
 
 # volumes:
