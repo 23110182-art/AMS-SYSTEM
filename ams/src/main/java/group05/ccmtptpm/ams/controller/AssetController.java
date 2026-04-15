@@ -17,7 +17,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 @RestController
 @RequestMapping("/api/asset")
 @RequiredArgsConstructor
-@PreAuthorize("hasAnyRole('USER', 'ADMIN')")
+//@PreAuthorize("hasAnyRole('USER', 'ADMIN')")
 public class AssetController {
 
     private final IAssetService assetService;

@@ -33,11 +33,12 @@ public class SecurityConfig {
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
                         .dispatcherTypeMatchers(DispatcherType.FORWARD, DispatcherType.ERROR).permitAll()
-                        .requestMatchers("/", "/error", "/login", "/register", "/api/auth/**", "/api/hello",
-                                "/css/**", "/js/**", "/images/**", "/webjars/**").permitAll()
-                        .requestMatchers("/admin/**", "/api/admin/**").hasRole("ADMIN")
-                        .requestMatchers("/user/**", "/api/users/**", "/api/asset/**").hasAnyRole("USER", "ADMIN")
-                        .anyRequest().authenticated()
+                        .anyRequest().permitAll()
+                        // .requestMatchers("/", "/error", "/login", "/register", "/api/auth/**", "/api/hello",
+                        //         "/css/**", "/js/**", "/images/**", "/webjars/**").permitAll()
+                        // .requestMatchers("/admin/**", "/api/admin/**").hasRole("ADMIN")
+                        // .requestMatchers("/user/**", "/api/users/**", "/api/asset/**").hasAnyRole("USER", "ADMIN")
+                        // .anyRequest().authenticated()
                 )
                 .exceptionHandling(ex -> ex
                         .authenticationEntryPoint((request, response, authException) -> {
