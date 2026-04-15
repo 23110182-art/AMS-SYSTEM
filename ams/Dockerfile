@@ -6,5 +6,6 @@ COPY . .
 RUN mvn clean package -DskipTests
 
 FROM eclipse-temurin:17-jdk-jammy
-COPY target/*.war app.war
+COPY --from=build /app/target/*.war app.war
+# COPY target/*.war app.war
 ENTRYPOINT ["java","-jar","/app.war"]
