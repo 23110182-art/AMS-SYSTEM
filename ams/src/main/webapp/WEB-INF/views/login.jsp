@@ -28,11 +28,11 @@
                 <input type="password" id="password" placeholder="Enter your password">
             </div>
 
-            <div class="demo-box">
+            <!-- <div class="demo-box">
                 <strong>Demo accounts:</strong>
                 Admin: username "admin", password "admin123"<br>
                 User: username "user", password "user123"
-            </div>
+            </div> -->
 
             <button class="btn-submit" id="loginBtn">Sign In</button>
 

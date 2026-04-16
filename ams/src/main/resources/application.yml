@@ -1,13 +1,22 @@
 spring:
+  # Connect render db
+  # datasource:
+  #   url: ${SPRING_DATASOURCE_URL}
+  #   username: ${SPRING_DATASOURCE_USERNAME}
+  #   password: ${SPRING_DATASOURCE_PASSWORD}
+  #   driver-class-name: ${SPRING_DATASOURCE_DRIVER}
+  
+  # Connect docker sql
   datasource:
-    url: jdbc:mysql://localhost:3307/ams_db
+    #url: jdbc:mysql://localhost:3307/ams_db
+    url: jdbc:mysql://mysql:3306/ams_db
     username: root
     password: 123456
     driver-class-name: com.mysql.cj.jdbc.Driver
 
   jpa:
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
     show-sql: true
     defer-datasource-initialization: true
     properties:
@@ -16,7 +25,7 @@ spring:
         dialect: org.hibernate.dialect.MySQLDialect
   sql:
     init:
-      mode: always 
+      mode: always
 
   mvc:
     view:
